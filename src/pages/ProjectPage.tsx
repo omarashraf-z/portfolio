@@ -1,6 +1,6 @@
 import { Link, useParams } from 'react-router-dom'
 import { getNeighbours, getProject } from '../data/projects'
-import { ScrollVideo } from '../components/ScrollVideo'
+import { SiteVideo } from '../components/SiteVideo'
 import { DeviceFrame } from '../components/DeviceFrame'
 import { Media } from '../components/Media'
 import { Reveal } from '../components/Reveal'
@@ -61,9 +61,9 @@ export function ProjectPage() {
         </div>
       </section>
 
-      {/* The scroll-through. Scrubbing this is the point of the page. */}
-      <section className="section--tight">
-        <ScrollVideo src={project.scrollVideo} poster={project.cover} title={project.title} />
+      {/* The recording of the finished site. The point of the page. */}
+      <section className="shell section--tight">
+        <SiteVideo src={project.video} poster={project.cover} title={project.title} />
       </section>
 
       {project.body && project.body.length > 0 && (

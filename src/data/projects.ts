@@ -44,11 +44,11 @@ export type Project = {
   /** Card image + the still shown before the scroll video loads. */
   cover?: string
   /**
-   * The scroll-through screen recording — the centrepiece of a project page.
-   * Pass an array to offer several encodings; the browser takes the first it
-   * can play, so put the most widely supported one first.
+   * A screen recording of the site, looping on the project page — the
+   * centrepiece. Pass an array to offer several encodings; the browser takes
+   * the first it can play, so put the most widely supported one first.
    */
-  scrollVideo?: string | string[]
+  video?: string | string[]
   /** Page screenshots, in the order you want them read. */
   shots?: Shot[]
   /** A paragraph or two on the project page. */
@@ -74,7 +74,7 @@ export const projects: Project[] = [
     // comes up blank, flip to false and the page falls back to the cover.
     embed: true,
     cover: '/work/gummybears/cover.jpg',
-    scrollVideo: '/work/gummybears/scroll.mp4',
+    video: '/work/gummybears/scroll.mp4',
     shots: [
       { src: '/work/gummybears/02-tickets.jpg', caption: 'Tickets, and what is left', wide: true },
       { src: '/work/gummybears/03-rules.jpg', caption: 'Where, and the house rules' },

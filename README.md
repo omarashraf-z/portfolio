@@ -1,8 +1,8 @@
 # Portfolio
 
 Personal portfolio for Omar Ashraf. Black, gray and white; a handful of
-deliberate animations; every project shown as a scroll-through recording plus a
-live version clients can actually test.
+deliberate animations; every project shown as a screen recording plus a live
+version clients can actually test.
 
 ## Run it
 
@@ -33,15 +33,14 @@ src/
     site.ts          name, headline, email, socials, bio
     projects.ts      every project — the file you edit
   components/
-    ScrollVideo.tsx  scroll position drives the video playhead
+    SiteVideo.tsx    the site recording, looping when it is on screen
     DeviceFrame.tsx  the live site in a frame, click-to-load
     Media.tsx        <img> that falls back to a labelled placeholder
     AssetSlot.tsx    that placeholder
     Reveal.tsx       fade-up on scroll into view
     Nav / Footer / ScrollProgress / ProjectCard
   hooks/
-    useScrollProgress.ts   element travel through the viewport, 0 → 1
-    useReveal.ts           one-shot IntersectionObserver
+    useReveal.ts     one-shot IntersectionObserver
   pages/
     Home / Work / ProjectPage / About / NotFound
   styles/
@@ -49,14 +48,15 @@ src/
     app.css          everything else
 ```
 
-### The scroll video
+### The site video
 
-A project page's hero is a tall track with a sticky frame inside it. As the
-page scrolls the track, that progress maps onto `video.currentTime`, eased so
-each wheel notch does not read as a jump. The video never plays on its own.
+A project page leads with a screen recording of the finished site, looping.
+It starts when it scrolls into view and pauses when it leaves, so a page with
+several of them is not decoding video nobody is watching. Click it to pause;
+that choice sticks.
 
-Falls back to the cover image under `prefers-reduced-motion`, and to a
-placeholder when the file is missing.
+Under `prefers-reduced-motion` it renders with controls and does not autoplay.
+A missing file falls back to a placeholder naming the path it wants.
 
 ### Live previews
 

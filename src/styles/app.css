@@ -338,24 +338,12 @@ a {
 
 .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 
-/* ---------------------------------------------------- scroll video --- */
+/* ------------------------------------------------------ site video --- */
 
-/* Tall track; the sticky stage inside it holds the frame while it scrubs. */
-.scrollvid { position: relative; }
+.sitevid { display: block; }
 
-.scrollvid__stage {
-  position: sticky;
-  top: 64px;
-  height: calc(100vh - 64px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.scrollvid__frame {
+.sitevid__frame {
   position: relative;
-  width: min(100%, 1100px);
   aspect-ratio: 16 / 10;
   background: var(--ink-100);
   border: 1px solid var(--line);
@@ -363,40 +351,59 @@ a {
   overflow: hidden;
 }
 
-.scrollvid__frame > video,
-.scrollvid__frame > img {
+.sitevid__frame > video {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-.scrollvid__hint {
+/* Covers the video so a click anywhere pauses it. The label only surfaces on
+   hover or keyboard focus — an autoplaying loop should not carry furniture. */
+.sitevid__toggle {
   position: absolute;
-  left: 1rem;
-  bottom: 1rem;
+  inset: 0;
   z-index: 2;
-  background: color-mix(in srgb, var(--ink-000) 60%, transparent);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding: 1rem;
+}
+
+.sitevid__badge {
+  font-family: var(--mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: color-mix(in srgb, var(--ink-000) 62%, transparent);
   backdrop-filter: blur(8px);
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 0.3rem 0.75rem;
-  transition: opacity var(--mid) var(--ease);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity var(--mid) var(--ease), transform var(--mid) var(--ease);
 }
 
-.scrollvid__hint[data-hidden='true'] { opacity: 0; }
+.sitevid__toggle:hover .sitevid__badge,
+.sitevid__toggle:focus-visible .sitevid__badge {
+  opacity: 1;
+  transform: none;
+}
 
-/* Thin readout of how far through the recording you are. */
-.scrollvid__track {
+/* Thin readout of how far through the loop the recording is. */
+.sitevid__track {
   position: absolute;
   left: 0;
   right: 0;
   bottom: 0;
   height: 2px;
   background: var(--line-soft);
-  z-index: 2;
+  z-index: 3;
 }
 
-.scrollvid__bar {
+.sitevid__bar {
   height: 100%;
   background: var(--paper);
   transform-origin: 0 50%;

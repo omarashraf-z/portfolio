@@ -26,19 +26,20 @@ So for a project with `slug: 'acme-store'`, the cover lives at
 `public/work/acme-store/cover.jpg` and is written in `projects.ts` as
 `/work/acme-store/cover.jpg` — the `public/` part is dropped in the path.
 
-## The scroll video
+## The site video
 
-This is the one that carries a project page. Scrolling the portfolio scrubs
-through it, so it should be a clean top-to-bottom pass over the finished site.
+This is the one that carries a project page. It plays on a loop, so it should
+be a clean pass down the finished site.
 
 - **Record**: a browser window at 1440×900, no bookmarks bar, no extensions
   visible. Scroll from the very top to the very bottom in one steady take.
-- **Length**: 10–20 seconds. Longer means more scrolling to get through it.
-- **Speed**: even. Any pause in the recording becomes a dead patch where the
-  page scrolls and nothing moves.
-- **Format**: MP4, H.264, no audio (it is muted anyway).
-- **Size**: 1440px wide, and keep the file under ~8 MB — it has to load before
-  it can be scrubbed. Handbrake or `ffmpeg -crf 28` gets most recordings there.
+- **Length**: 10–20 seconds. It loops, so anything longer asks a visitor to
+  wait to see the end.
+- **Speed**: even, and try to end somewhere that cuts back to the top without
+  a jolt — it is a loop, and an abrupt seam is the thing people notice.
+- **Format**: MP4, H.264, no audio (it is muted, and autoplay depends on it).
+- **Size**: 1440px wide, under ~8 MB. Handbrake or `ffmpeg -crf 28` gets most
+  recordings there.
 
 ```bash
 ffmpeg -i raw.mov -vf scale=1440:-2 -c:v libx264 -crf 28 -preset slow -an scroll.mp4
@@ -69,7 +70,7 @@ In `src/data/projects.ts`, add one object. Nothing else needs touching:
   liveUrl: 'https://acme.com',
   embed: false,
   cover: '/work/acme-store/cover.jpg',
-  scrollVideo: '/work/acme-store/scroll.mp4',
+  video: '/work/acme-store/scroll.mp4',
   shots: [
     { src: '/work/acme-store/01-home.jpg', caption: 'Home', wide: true },
     { src: '/work/acme-store/02-cart.jpg', caption: 'Cart' },
@@ -82,7 +83,7 @@ In `src/data/projects.ts`, add one object. Nothing else needs touching:
 ## Capturing it automatically
 
 `tools/capture.mjs` drives a real browser over a live site and writes every
-file listed above — the stills, the phone shot, and the scroll-through in both
+file listed above — the stills, the phone shot, and the site recording in both
 encodings — at the right sizes.
 
 ```bash
@@ -100,16 +101,15 @@ check the output before committing it.
 
 ## Two encodings for the video
 
-`scrollVideo` takes an array, and the browser plays the first entry it
-understands:
+`video` takes an array, and the browser plays the first entry it understands:
 
 ```ts
-scrollVideo: ['/work/acme/scroll.mp4', '/work/acme/scroll.webm'],
+video: ['/work/acme/scroll.mp4', '/work/acme/scroll.webm'],
 ```
 
-MP4/H.264 first because it is hardware-decoded almost everywhere, which is
-what keeps scrubbing smooth; WebM/VP9 second as a smaller fallback. A single
-string still works if you only have one file.
+MP4/H.264 first, since it is hardware-decoded almost everywhere; WebM/VP9
+second as a smaller fallback. A single string works fine if you only have one
+file.
 
 ## About `embed`
 
