@@ -73,14 +73,18 @@ anywhere in the chrome, so the screenshots are the only colour on the page.
 
 Both themes define the same tokens by **role** — `--ink-050` is always the page
 ground, `--paper` is always the primary text — so every rule in `app.css` works
-in either without knowing which is on. Night is the default and the site's
-identity; day is opt-in through the toggle in the nav, remembered in
-`localStorage`, and applied by an inline script in `index.html` before first
-paint so a returning visitor sees no flash of the wrong theme.
+in either without knowing which is on.
 
-To follow the visitor's OS instead of defaulting to dark, change `readTheme()`
-in `src/hooks/useTheme.ts` to fall back to
-`matchMedia('(prefers-color-scheme: light)')` when nothing is stored.
+A first visit follows the visitor's operating system, and keeps following it —
+if their OS switches to dark at sunset while the page is open, so does the
+page. The toggle in the nav overrides that, and only then is anything written
+to `localStorage`: writing on load would record a choice they never made and
+stop the site following them. Once chosen, the choice wins on every later
+visit.
+
+The same rule runs in an inline script in `index.html` before first paint, so
+there is no flash of the wrong theme. If you edit `readTheme()`, edit that
+script to match — the comment in each points at the other.
 
 The dimmest text token in each theme is set to clear 4.5:1 against its ground.
 

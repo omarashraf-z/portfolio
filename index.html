@@ -13,14 +13,26 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <script>
-  // Runs before first paint so a day-mode visitor never sees the dark theme
-  // flash past. Must stay in step with readTheme() in src/hooks/useTheme.ts.
-  try {
-    document.documentElement.dataset.theme =
-      localStorage.getItem('theme') === 'light' ? 'light' : 'dark';
-  } catch (e) {
-    document.documentElement.dataset.theme = 'dark';
-  }
+  // Runs before first paint so nobody sees the wrong theme flash past.
+  // A stored choice wins; otherwise follow the OS. Must stay in step with
+  // readTheme() in src/hooks/useTheme.ts.
+  (function () {
+    var theme;
+    try {
+      var stored = localStorage.getItem('theme');
+      theme = stored === 'light' || stored === 'dark' ? stored : null;
+    } catch (e) {
+      theme = null;
+    }
+    if (!theme) {
+      theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches
+        ? 'light'
+        : 'dark';
+    }
+    document.documentElement.dataset.theme = theme;
+    var meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) meta.setAttribute('content', theme === 'light' ? '#faf9f7' : '#0a0a0a');
+  })();
 </script>
 </head>
 <body>
