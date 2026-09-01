@@ -75,16 +75,20 @@ Both themes define the same tokens by **role** — `--ink-050` is always the pag
 ground, `--paper` is always the primary text — so every rule in `app.css` works
 in either without knowing which is on.
 
-A first visit follows the visitor's operating system, and keeps following it —
-if their OS switches to dark at sunset while the page is open, so does the
-page. The toggle in the nav overrides that, and only then is anything written
-to `localStorage`: writing on load would record a choice they never made and
-stop the site following them. Once chosen, the choice wins on every later
+Night is the default for everyone, deliberately: it is the site's own look, so
+a first visit shows it whatever the visitor's OS is set to. The toggle in the
+nav switches to day, and only then is anything written to `localStorage` — so a
+stored value always means somebody chose it. That choice wins on every later
 visit.
 
-The same rule runs in an inline script in `index.html` before first paint, so
-there is no flash of the wrong theme. If you edit `readTheme()`, edit that
-script to match — the comment in each points at the other.
+The same rule runs in an inline script in `index.html` before first paint, so a
+returning day-mode visitor sees no flash of the dark one. If you edit
+`readTheme()`, edit that script to match — the comment in each points at the
+other.
+
+To follow the visitor's OS on a first visit instead, have `readTheme()` fall
+back to `matchMedia('(prefers-color-scheme: light)')` when nothing is stored,
+and make the inline script do the same.
 
 The dimmest text token in each theme is set to clear 4.5:1 against its ground.
 
