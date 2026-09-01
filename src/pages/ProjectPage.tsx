@@ -6,6 +6,7 @@ import { Media } from '../components/Media'
 import { Reveal } from '../components/Reveal'
 import { NotFound } from './NotFound'
 import type { Shot } from '../data/projects'
+import { PHONE, useMediaQuery } from '../hooks/useMediaQuery'
 
 const shotFrame = (shot: Shot) =>
   `shot__frame ${shot.tall ? 'shot__frame--tall' : ''}`.trim()
@@ -17,7 +18,14 @@ export function ProjectPage() {
   if (!project) return <NotFound />
 
   const { prev, next } = getNeighbours(project.slug)
-  const shots = project.shots ?? []
+
+  // A phone shows the site's own phone layout — captures and all — with the
+  // desktop layout as the odd one out at the end of the gallery. Wider screens
+  // get the reverse. Falls back to the desktop set for projects with no phone
+  // captures.
+  const onPhone = useMediaQuery(PHONE)
+  const media = onPhone && project.mobile ? project.mobile : project
+  const shots = media.shots ?? project.shots ?? []
 
   return (
     <>
@@ -63,7 +71,12 @@ export function ProjectPage() {
 
       {/* The recording of the finished site. The point of the page. */}
       <section className="shell section--tight">
-        <SiteVideo src={project.video} poster={project.cover} title={project.title} />
+        <SiteVideo
+          src={media.video ?? project.video}
+          poster={onPhone && project.mobile ? undefined : project.cover}
+          portrait={Boolean(onPhone && project.mobile?.video)}
+          title={project.title}
+        />
       </section>
 
       {project.body && project.body.length > 0 && (

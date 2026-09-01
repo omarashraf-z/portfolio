@@ -51,6 +51,15 @@ export type Project = {
   video?: string | string[]
   /** Page screenshots, in the order you want them read. */
   shots?: Shot[]
+  /**
+   * What a visitor on a phone sees instead. Captures of the site's own mobile
+   * layout, so a phone shows a phone and a desktop shows a desktop. Anything
+   * left out here falls back to the desktop media above.
+   */
+  mobile?: {
+    video?: string | string[]
+    shots?: Shot[]
+  }
   /** A paragraph or two on the project page. */
   body?: string[]
   /** Show on the home page. Keep this to three. */
@@ -82,6 +91,18 @@ export const projects: Project[] = [
       { src: '/work/gummybears/05-login.jpg', caption: 'Accounts' },
       { src: '/work/gummybears/06-mobile.jpg', caption: 'Mobile', tall: true },
     ],
+    mobile: {
+      video: ['/work/gummybears/mobile/scroll.mp4', '/work/gummybears/mobile/scroll.webm'],
+      shots: [
+        { src: '/work/gummybears/mobile/02-tickets.jpg', caption: 'Tickets, and what is left', tall: true },
+        { src: '/work/gummybears/mobile/03-rules.jpg', caption: 'Where, and the house rules', tall: true },
+        { src: '/work/gummybears/mobile/04-archive.jpg', caption: 'Everything already done', tall: true },
+        { src: '/work/gummybears/mobile/05-login.jpg', caption: 'Accounts', tall: true },
+        // The mirror of the desktop set's phone shot: on a phone, the odd one
+        // out is the desktop layout.
+        { src: '/work/gummybears/cover.jpg', caption: 'Desktop' },
+      ],
+    },
     body: [
       'The brand runs one party at a time, so the site refuses to behave like a listings page. ' +
         'The home page is the current party — poster, countdown, ticket tiers, rules — and when ' +

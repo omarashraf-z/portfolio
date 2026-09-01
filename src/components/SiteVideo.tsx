@@ -24,10 +24,13 @@ export function SiteVideo({
   src,
   poster,
   title,
+  portrait = false,
 }: {
   src?: string | string[]
   poster?: string
   title: string
+  /** A recording of the site's phone layout, so the frame is a phone shape. */
+  portrait?: boolean
 }) {
   const sources = src ? (Array.isArray(src) ? src : [src]) : []
 
@@ -92,7 +95,7 @@ export function SiteVideo({
   if (!playable) {
     return (
       <div className="sitevid">
-        <div className="sitevid__frame">
+        <div className={`sitevid__frame ${portrait ? "sitevid__frame--portrait" : ""}`.trim()}>
           <AssetSlot
             kind="video"
             path={sources[0]}
@@ -111,7 +114,7 @@ export function SiteVideo({
   if (reduced) {
     return (
       <div className="sitevid">
-        <div className="sitevid__frame">
+        <div className={`sitevid__frame ${portrait ? "sitevid__frame--portrait" : ""}`.trim()}>
           <video
             controls
             muted
@@ -131,7 +134,7 @@ export function SiteVideo({
 
   return (
     <div className="sitevid">
-      <div className="sitevid__frame">
+      <div className={`sitevid__frame ${portrait ? "sitevid__frame--portrait" : ""}`.trim()}>
         <video
           ref={videoRef}
           poster={asset(poster)}

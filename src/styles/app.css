@@ -345,10 +345,20 @@ a {
 .sitevid__frame {
   position: relative;
   aspect-ratio: 16 / 10;
+  /* Narrower than the text column it sits under, so the page has a shape
+     rather than one full-width block after another. */
+  max-width: 1040px;
+  margin-inline: auto;
   background: var(--ink-100);
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   overflow: hidden;
+}
+
+/* A recording of the site's phone layout. */
+.sitevid__frame--portrait {
+  aspect-ratio: 9 / 19.5;
+  max-width: 340px;
 }
 
 .sitevid__frame > video {

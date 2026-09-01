@@ -111,6 +111,35 @@ MP4/H.264 first, since it is hardware-decoded almost everywhere; WebM/VP9
 second as a smaller fallback. A single string works fine if you only have one
 file.
 
+## Phone captures
+
+A project page shows the site's own phone layout to anyone viewing the
+portfolio on a phone, and its desktop layout to everyone else. The odd one out
+at the end of the gallery flips too: a desktop visitor's last screenshot is the
+site on a phone, a phone visitor's last screenshot is the site on a desktop.
+
+Put the phone versions in a `mobile` block. Anything you leave out falls back
+to the desktop media, so a project with no phone captures still works.
+
+```ts
+mobile: {
+  video: ['/work/acme/mobile/scroll.mp4', '/work/acme/mobile/scroll.webm'],
+  shots: [
+    { src: '/work/acme/mobile/01-home.jpg', caption: 'Home', tall: true },
+    { src: '/work/acme/cover.jpg', caption: 'Desktop' },
+  ],
+},
+```
+
+Record these at a 390×844 viewport. Mark every phone screenshot `tall: true`
+so it gets a portrait frame rather than being cropped into a 16:10 one, and
+leave the one desktop shot without it.
+
+The swap happens below 720px wide and is decided in JS, not CSS: `<picture>`
+could choose an image on its own, but a `<video>` cannot — the `media`
+attribute is not honoured on a `<source>` inside one. Only the chosen set
+downloads, so a phone never fetches the desktop video.
+
 ## About `embed`
 
 `embed: true` runs the real site in an iframe on the project page, so a client
