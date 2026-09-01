@@ -242,14 +242,14 @@ a {
 .hero__line {
   display: block;
   overflow: hidden;
-  padding-bottom: 0.18em;
-  margin-bottom: -0.18em;
+  padding-bottom: 0.3em;
+  margin-bottom: -0.3em;
 }
 
 .hero__line > span {
   display: block;
   /* Far enough down to clear the taller mask before the line animates in. */
-  transform: translate3d(0, 145%, 0);
+  transform: translate3d(0, 175%, 0);
   animation: line-in 1s var(--ease) forwards;
   animation-delay: calc(var(--i, 0) * 90ms + 120ms);
 }
