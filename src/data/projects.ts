@@ -53,63 +53,41 @@ export type Project = {
 
 export const projects: Project[] = [
   {
-    slug: 'project-one',
-    title: 'Project One',
-    summary: 'Placeholder — replace with the first site you want clients to see.',
+    slug: 'gummybears',
+    title: 'TheGummyBears',
+    summary:
+      'An entertainment brand that throws one party at a time — so the home page is the party, ' +
+      'with accounts, reservations and an admin approval queue behind it.',
     year: '2025',
-    kind: 'Placeholder',
-    role: ['Design', 'Frontend'],
-    stack: ['React', 'TypeScript', 'Vite'],
-    liveUrl: 'https://example.com',
-    embed: false,
-    cover: '/work/project-one/cover.jpg',
-    scrollVideo: '/work/project-one/scroll.mp4',
+    kind: 'Entertainment website',
+    role: ['Structure', 'Design', 'Frontend', 'Backend'],
+    stack: ['React', 'TypeScript', 'Vite', 'Supabase', 'PostgreSQL', 'GitHub Pages'],
+    liveUrl: 'https://omarashraf-z.github.io/ClaudeCode-enviroment/',
+    repoUrl: 'https://github.com/omarashraf-z/ClaudeCode-enviroment',
+    // GitHub Pages does not block framing, so this should embed — if the frame
+    // comes up blank, flip to false and the page falls back to the cover.
+    embed: true,
+    cover: '/work/gummybears/cover.jpg',
+    scrollVideo: '/work/gummybears/scroll.mp4',
     shots: [
-      { src: '/work/project-one/01-home.jpg', caption: 'Home', wide: true },
-      { src: '/work/project-one/02-detail.jpg', caption: 'Product detail' },
-      { src: '/work/project-one/03-mobile.jpg', caption: 'Mobile' },
+      { src: '/work/gummybears/01-poster.jpg', caption: 'The home page is the poster', wide: true },
+      { src: '/work/gummybears/02-reserve.jpg', caption: 'Reserving a spot' },
+      { src: '/work/gummybears/03-ticket.jpg', caption: 'A confirmed ticket stub' },
+      { src: '/work/gummybears/04-admin.jpg', caption: 'Admin reservation queue' },
+      { src: '/work/gummybears/05-mobile.jpg', caption: 'Mobile' },
     ],
     body: [
-      'Two or three sentences on what the client needed and what you built. ' +
-        'Keep it concrete — what was the problem, what did you decide, what changed.',
-      'A second paragraph for anything worth calling out: a performance number, ' +
-        'a tricky interaction, a constraint you worked around.',
+      'The brand runs one party at a time, so the site refuses to behave like a listings page. ' +
+        'The home page is the current party — poster, countdown, ticket tiers, rules — and when ' +
+        'the party is over it is gone. Every detail on it is edited live from an admin panel ' +
+        'rather than hard-coded, so the next party replaces this one without a deploy.',
+      'Guests make an account, pick a ticket, pay by InstaPay and upload the transfer screenshot. ' +
+        'That lands in an approval queue where each reservation is accepted or rejected, and both ' +
+        'decisions send the guest an email. Confirmed tickets render as a real stub with a QR code.',
+      'The whole thing is a static build on GitHub Pages with no server of my own: Supabase holds ' +
+        'accounts, party data, reservations and receipt uploads, with row-level security doing the ' +
+        'access control, and a small Google Apps Script sends the two guest emails.',
     ],
-    featured: true,
-  },
-  {
-    slug: 'project-two',
-    title: 'Project Two',
-    summary: 'Placeholder — a second piece of work.',
-    year: '2025',
-    kind: 'Placeholder',
-    role: ['Frontend'],
-    stack: ['Next.js', 'Tailwind'],
-    liveUrl: 'https://example.com',
-    embed: false,
-    cover: '/work/project-two/cover.jpg',
-    scrollVideo: '/work/project-two/scroll.mp4',
-    shots: [
-      { src: '/work/project-two/01-home.jpg', caption: 'Landing', wide: true },
-      { src: '/work/project-two/02-about.jpg', caption: 'About' },
-      { src: '/work/project-two/03-contact.jpg', caption: 'Contact' },
-    ],
-    body: ['What this project was and what you did on it.'],
-    featured: true,
-  },
-  {
-    slug: 'project-three',
-    title: 'Project Three',
-    summary: 'Placeholder — a third piece of work.',
-    year: '2024',
-    kind: 'Placeholder',
-    role: ['Design', 'Frontend', 'Deploy'],
-    stack: ['HTML', 'CSS', 'JavaScript'],
-    embed: false,
-    cover: '/work/project-three/cover.jpg',
-    scrollVideo: '/work/project-three/scroll.mp4',
-    shots: [{ src: '/work/project-three/01-home.jpg', caption: 'Home', wide: true }],
-    body: ['What this project was and what you did on it.'],
     featured: true,
   },
 ]
