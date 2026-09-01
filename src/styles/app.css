@@ -14,6 +14,7 @@ body {
   margin: 0;
   background: var(--ink-050);
   color: var(--paper);
+  transition: background var(--mid) var(--ease), color var(--mid) var(--ease);
   font-family: var(--font);
   font-size: 16px;
   line-height: 1.6;
@@ -183,6 +184,31 @@ a {
 
 .nav__link:hover::after,
 .nav__link[aria-current='page']::after { transform: scaleX(1); }
+
+/* Night/day switch. Sits in the nav, sized to match the link row rather than
+   announcing itself. */
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--gray-600);
+  transition:
+    color var(--fast) var(--ease),
+    border-color var(--fast) var(--ease),
+    background var(--fast) var(--ease);
+}
+
+.theme-toggle:hover {
+  color: var(--ink-050);
+  background: var(--paper);
+  border-color: var(--paper);
+}
+
+.theme-toggle svg { display: block; }
 
 /* --------------------------------------------------------------- reveal -- */
 
@@ -498,7 +524,9 @@ a {
   width: 100%;
   height: 100%;
   border: 0;
-  background: var(--white);
+  /* The preview shows somebody else's site, so it keeps a white page behind
+     it in both themes rather than following ours. */
+  background: #ffffff;
 }
 
 .device__actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
@@ -549,7 +577,7 @@ a {
     repeating-linear-gradient(
       45deg,
       transparent 0 10px,
-      rgba(255, 255, 255, 0.018) 10px 20px
+      var(--hatch) 10px 20px
     ),
     var(--ink-100);
   border-radius: inherit;

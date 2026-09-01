@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { site } from '../data/site'
+import { ThemeToggle } from './ThemeToggle'
 
 export function Nav() {
   const ref = useRef<HTMLElement>(null)
@@ -35,6 +36,7 @@ export function Nav() {
           <a className="nav__link" href={`mailto:${site.email}`}>
             Contact
           </a>
+          <ThemeToggle />
         </nav>
       </div>
     </header>

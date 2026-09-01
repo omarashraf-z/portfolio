@@ -1,5 +1,13 @@
-/* The entire palette. Change it here, the whole site follows. */
+/* The entire palette. Change it here, the whole site follows.
+ *
+ * Dark is the default and the site's identity; light is opt-in through the
+ * toggle in the nav. Both define the same tokens by ROLE — --ink-050 is
+ * always the page ground, --paper is always the primary text — so every rule
+ * elsewhere in the stylesheet works in either theme without knowing which is
+ * on.
+ */
 :root {
+  color-scheme: dark;
   /* Ground → surface. Black through the dark grays. */
   --ink-000: #000000;
   --ink-050: #0a0a0a;   /* page background */
@@ -10,7 +18,7 @@
   --ink-400: #3a3a3a;   /* hairline, stronger */
 
   /* Mid grays → text. */
-  --gray-500: #6e6e6e;  /* dimmest legible text */
+  --gray-500: #7a7a7a;  /* dimmest legible text — 4.5:1 on --ink-050 */
   --gray-600: #909090;  /* muted text */
   --gray-700: #b8b8b8;  /* secondary text */
   --paper:    #f2f2f2;  /* primary text */
@@ -38,4 +46,32 @@
 
   --radius: 4px;
   --radius-lg: 10px;
+
+  /* The faint diagonal hatch on pending-asset placeholders. */
+  --hatch: rgba(255, 255, 255, 0.018);
+}
+
+/* Day mode. Same roles, inverted: a warm off-white ground, near-black text,
+ * and grays dark enough to stay legible on it. */
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --ink-000: #ffffff;
+  --ink-050: #faf9f7;   /* page background */
+  --ink-100: #f3f2ef;   /* raised surface */
+  --ink-150: #eceae6;   /* card */
+  --ink-200: #e4e1dc;   /* card hover */
+  --ink-300: #d5d2cc;   /* hairline, strong */
+  --ink-400: #b9b5ad;   /* hairline, stronger */
+
+  --gray-500: #706d66;  /* dimmest legible text — 4.9:1 on --ink-050 */
+  --gray-600: #5c5952;  /* muted text */
+  --gray-700: #3f3d38;  /* secondary text */
+  --paper:    #171614;  /* primary text */
+  --white:    #000000;  /* emphasis only — the far end from --paper */
+
+  --line: rgba(0, 0, 0, 0.12);
+  --line-soft: rgba(0, 0, 0, 0.06);
+
+  --hatch: rgba(0, 0, 0, 0.03);
 }

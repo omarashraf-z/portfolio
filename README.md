@@ -65,12 +65,24 @@ preview** — three third-party sites booting behind a page someone is scrolling
 past is not worth the load. Sites that block embedding are handled by the
 per-project `embed` flag; see ASSETS.md.
 
-### Colour
+### Colour and themes
 
 Everything comes from custom properties in `src/styles/tokens.css`: `--ink-*`
-for the black-to-gray surfaces, `--gray-*` for secondary text, `--paper` for
-primary. No hue anywhere in the chrome, so the screenshots are the only colour
-on the page.
+for the surfaces, `--gray-*` for secondary text, `--paper` for primary. No hue
+anywhere in the chrome, so the screenshots are the only colour on the page.
+
+Both themes define the same tokens by **role** — `--ink-050` is always the page
+ground, `--paper` is always the primary text — so every rule in `app.css` works
+in either without knowing which is on. Night is the default and the site's
+identity; day is opt-in through the toggle in the nav, remembered in
+`localStorage`, and applied by an inline script in `index.html` before first
+paint so a returning visitor sees no flash of the wrong theme.
+
+To follow the visitor's OS instead of defaulting to dark, change `readTheme()`
+in `src/hooks/useTheme.ts` to fall back to
+`matchMedia('(prefers-color-scheme: light)')` when nothing is stored.
+
+The dimmest text token in each theme is set to clear 4.5:1 against its ground.
 
 ## Deploying
 
