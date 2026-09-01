@@ -117,6 +117,61 @@ export const projects: Project[] = [
     ],
     featured: true,
   },
+  {
+    slug: 'restless',
+    title: 'Restless Coffee House & Bakery',
+    summary:
+      'A coffee house in Maadi, with its whole 254-item menu, an order builder that ' +
+      'hands off to WhatsApp, and an English/Arabic toggle that flips the page.',
+    year: '2026',
+    kind: 'Coffee house website',
+    role: ['Structure', 'Design', 'Frontend'],
+    stack: ['HTML', 'CSS', 'JavaScript', 'JSON', 'GitHub Pages'],
+    liveUrl: 'https://omarashraf-z.github.io/restless.claude/',
+    repoUrl: 'https://github.com/omarashraf-z/restless.claude',
+    embed: true,
+    cover: '/work/restless/cover.jpg',
+    video: '/work/restless/scroll.mp4',
+    shots: [
+      { src: '/work/restless/01-menu.jpg', caption: 'The menu, set with dotted leaders', wide: true },
+      { src: '/work/restless/02-order.jpg', caption: 'Checkout, before WhatsApp' },
+      { src: '/work/restless/04-arabic.jpg', caption: 'Arabic, right to left' },
+      { src: '/work/restless/03-visit.jpg', caption: 'Hours and directions' },
+      { src: '/work/restless/05-mobile.jpg', caption: 'Mobile', tall: true },
+    ],
+    mobile: {
+      video: '/work/restless/mobile/scroll.mp4',
+      shots: [
+        { src: '/work/restless/mobile/01-menu.jpg', caption: 'The menu, set with dotted leaders', tall: true },
+        { src: '/work/restless/mobile/02-order.jpg', caption: 'Checkout, before WhatsApp', tall: true },
+        { src: '/work/restless/mobile/04-arabic.jpg', caption: 'Arabic, right to left', tall: true },
+        { src: '/work/restless/mobile/03-visit.jpg', caption: 'Hours and directions', tall: true },
+        { src: '/work/restless/cover.jpg', caption: 'Desktop' },
+      ],
+    },
+    body: [
+      'A coffee house and bakery in Degla, Maadi, whose customers nearly all arrive from ' +
+        'a link in an Instagram bio, on mobile data. So the site is plain HTML, CSS and one ' +
+        'JavaScript file — no framework, no build step, nothing to break a year from now, ' +
+        'and hosted free on GitHub Pages with the domain as the only running cost.',
+      'Nothing about the business is written into the code. The address, phone numbers, ' +
+        'opening hours, all 254 menu items and every line of interface text live in three ' +
+        'JSON files, so a price change is one edit and a commit. The open/closed badge on ' +
+        'every page is computed from those hours in Cairo time, and shifts that run past ' +
+        'midnight are handled rather than assumed away.',
+      'Every priced item carries a quantity control, and what a visitor picks collects into ' +
+        'a basket that survives moving between pages. Checkout takes their name, phone and ' +
+        'address, then writes the whole order into a WhatsApp message — no server, no ' +
+        'payment provider, no monthly cost. The basket stores each line with its own name ' +
+        'and price rather than a pointer into the menu, so editing a price later can never ' +
+        'silently rewrite somebody\'s open order.',
+      'The English/Arabic toggle sets dir="rtl" and mirrors the whole layout, remembers the ' +
+        'choice, and gives an Arabic browser Arabic on the first visit. Interface text, page ' +
+        'copy and menu section names are translated; the 254 item names deliberately are not, ' +
+        'since machine-translating them would put mistakes next to real prices.',
+    ],
+    featured: true,
+  },
 ]
 
 export const featuredProjects = projects.filter((p) => p.featured)
@@ -127,9 +182,14 @@ export const getProject = (slug?: string) => projects.find((p) => p.slug === slu
 export function getNeighbours(slug: string) {
   const i = projects.findIndex((p) => p.slug === slug)
   if (i === -1) return { prev: undefined, next: undefined }
+
   const count = projects.length
-  return {
-    prev: count > 1 ? projects[(i - 1 + count) % count] : undefined,
-    next: count > 1 ? projects[(i + 1) % count] : undefined,
-  }
+  if (count < 2) return { prev: undefined, next: undefined }
+
+  const prev = projects[(i - 1 + count) % count]
+  const next = projects[(i + 1) % count]
+
+  // With exactly two projects both sides wrap to the same one, and offering
+  // it twice reads as a mistake. Keep the forward link only.
+  return prev.slug === next.slug ? { prev: undefined, next } : { prev, next }
 }
