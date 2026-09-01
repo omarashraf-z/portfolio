@@ -99,17 +99,21 @@ It needs the site to be reachable from wherever it runs. A site whose content
 comes from an API you cannot reach will capture its empty state instead, so
 check the output before committing it.
 
-## Two encodings for the video
+## One encoding is enough
 
-`video` takes an array, and the browser plays the first entry it understands:
+Ship MP4/H.264 and nothing else. Every browser in use plays it, so a second
+encoding is weight in the repo that no visitor ever downloads.
+
+`video` does take an array if you ever need a fallback, and the browser plays
+the first entry it understands:
 
 ```ts
-video: ['/work/acme/scroll.mp4', '/work/acme/scroll.webm'],
+video: ['/work/acme/scroll.mp4', '/work/acme/scroll.av1.mp4'],
 ```
 
-MP4/H.264 first, since it is hardware-decoded almost everywhere; WebM/VP9
-second as a smaller fallback. A single string works fine if you only have one
-file.
+Paths can also be absolute URLs. If the repo ever gets heavy enough to want
+the videos on a CDN, that is a one-line change per project — point `video` at
+`https://…` and delete the local file. Nothing else needs touching.
 
 ## Phone captures
 
