@@ -74,7 +74,7 @@ export const projects: Project[] = [
     // comes up blank, flip to false and the page falls back to the cover.
     embed: true,
     cover: '/work/gummybears/cover.jpg',
-    video: '/work/gummybears/scroll.mp4',
+    video: ['/work/gummybears/scroll.mp4', '/work/gummybears/scroll.webm'],
     shots: [
       { src: '/work/gummybears/02-tickets.jpg', caption: 'Tickets, and what is left', wide: true },
       { src: '/work/gummybears/03-rules.jpg', caption: 'Where, and the house rules' },
