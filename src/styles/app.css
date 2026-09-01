@@ -43,9 +43,12 @@ a {
 /* ---------------------------------------------------------- typography -- */
 
 .display {
-  /* The floor has to hold the longest authored line without wrapping — the
-     hero writes one line per entry, and a wrap strands a word on its own. */
-  font-size: clamp(2rem, 9vw, 8rem);
+  /* The hero writes one line per entry, so a wrap strands a word on its own.
+     Measured against the longest line, it fits up to ~11.2vw at 320px, where
+     the fixed 20px gutter costs proportionally most; 10.5vw leaves room for
+     another browser's metrics. The 8rem ceiling means desktop is unchanged —
+     this only grows the type below ~1220px. */
+  font-size: clamp(2rem, 10.5vw, 8rem);
   line-height: 0.94;
   letter-spacing: -0.045em;
   font-weight: 700;
