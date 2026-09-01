@@ -234,11 +234,22 @@ a {
 }
 
 /* Each line masks its own slide-up so the headline assembles on load. */
-.hero__line { overflow: hidden; display: block; }
+/* Each line masks its own slide-up.
+   The mask has to sit lower than the line box: at line-height 0.94 the box is
+   shorter than Inter's glyphs, so clipping at its edge cut the tails off g, y
+   and p. The padding drops the clip below the descenders and the negative
+   margin takes the space back, leaving the vertical rhythm as it was. */
+.hero__line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.18em;
+  margin-bottom: -0.18em;
+}
 
 .hero__line > span {
   display: block;
-  transform: translate3d(0, 105%, 0);
+  /* Far enough down to clear the taller mask before the line animates in. */
+  transform: translate3d(0, 145%, 0);
   animation: line-in 1s var(--ease) forwards;
   animation-delay: calc(var(--i, 0) * 90ms + 120ms);
 }
