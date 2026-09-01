@@ -1,5 +1,9 @@
 # Sending me the pictures and videos
 
+> **Shortcut:** if the site is live and reachable, you do not have to make any
+> of this by hand — see [Capturing it automatically](#capturing-it-automatically)
+> at the bottom.
+
 Nothing in the code changes when the media arrives. Every image and video on
 the site is looked up by path, and anything missing renders a labelled
 placeholder printing the exact filename it wants. Save the file to that name
@@ -74,6 +78,38 @@ In `src/data/projects.ts`, add one object. Nothing else needs touching:
   featured: true,
 }
 ```
+
+## Capturing it automatically
+
+`tools/capture.mjs` drives a real browser over a live site and writes every
+file listed above — the stills, the phone shot, and the scroll-through in both
+encodings — at the right sizes.
+
+```bash
+npm i -D playwright @ffmpeg-installer/ffmpeg     # once
+node tools/capture.mjs --url https://example.com --slug acme-store
+```
+
+Options: `--shots 4` how many screens to take down the page, `--seconds 14`
+how long the scroll pass runs. It writes into `public/work/<slug>/`; you still
+add the paths to `projects.ts`.
+
+It needs the site to be reachable from wherever it runs. A site whose content
+comes from an API you cannot reach will capture its empty state instead, so
+check the output before committing it.
+
+## Two encodings for the video
+
+`scrollVideo` takes an array, and the browser plays the first entry it
+understands:
+
+```ts
+scrollVideo: ['/work/acme/scroll.mp4', '/work/acme/scroll.webm'],
+```
+
+MP4/H.264 first because it is hardware-decoded almost everywhere, which is
+what keeps scrubbing smooth; WebM/VP9 second as a smaller fallback. A single
+string still works if you only have one file.
 
 ## About `embed`
 

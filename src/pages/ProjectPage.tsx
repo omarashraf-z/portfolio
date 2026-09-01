@@ -5,6 +5,10 @@ import { DeviceFrame } from '../components/DeviceFrame'
 import { Media } from '../components/Media'
 import { Reveal } from '../components/Reveal'
 import { NotFound } from './NotFound'
+import type { Shot } from '../data/projects'
+
+const shotFrame = (shot: Shot) =>
+  `shot__frame ${shot.tall ? 'shot__frame--tall' : ''}`.trim()
 
 export function ProjectPage() {
   const { slug } = useParams()
@@ -121,7 +125,7 @@ export function ProjectPage() {
             shot.wide ? (
               <Reveal key={shot.src} delay={(i % 2) * 80}>
                 <figure className="shot">
-                  <div className="shot__frame">
+                  <div className={shotFrame(shot)}>
                     <Media src={shot.src} alt={`${project.title} — ${shot.caption ?? 'page'}`} />
                   </div>
                   {shot.caption && <figcaption className="shot__caption">{shot.caption}</figcaption>}
@@ -135,7 +139,7 @@ export function ProjectPage() {
               shot.wide ? null : (
                 <Reveal key={shot.src} delay={(i % 2) * 80}>
                   <figure className="shot">
-                    <div className="shot__frame">
+                    <div className={shotFrame(shot)}>
                       <Media src={shot.src} alt={`${project.title} — ${shot.caption ?? 'page'}`} />
                     </div>
                     {shot.caption && (

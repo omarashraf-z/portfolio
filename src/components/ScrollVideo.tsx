@@ -4,6 +4,13 @@ import { AssetSlot } from './AssetSlot'
 import { Media } from './Media'
 import { prefersReducedMotion, useScrollProgress } from '../hooks/useScrollProgress'
 
+/** Browsers skip a <source> whose type they cannot play, so label each one. */
+function mimeFor(path: string) {
+  if (path.endsWith('.webm')) return 'video/webm'
+  if (path.endsWith('.ogv')) return 'video/ogg'
+  return 'video/mp4'
+}
+
 /**
  * The centrepiece.
  *
@@ -22,11 +29,13 @@ export function ScrollVideo({
   /** Track height. Taller = slower, more deliberate scrub. */
   trackVh = 320,
 }: {
-  src?: string
+  src?: string | string[]
   poster?: string
   title: string
   trackVh?: number
 }) {
+  const sources = src ? (Array.isArray(src) ? src : [src]) : []
+
   const trackRef = useRef<HTMLDivElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
   const barRef = useRef<HTMLDivElement>(null)
@@ -76,7 +85,7 @@ export function ScrollVideo({
 
   useScrollProgress(trackRef, onProgress)
 
-  const scrubbable = Boolean(src) && !failed && !reduced
+  const scrubbable = sources.length > 0 && !failed && !reduced
 
   // Nothing to scrub. Reduced motion still gets the cover image; a missing or
   // broken file says so plainly, because that is a thing to go and fix.
@@ -84,12 +93,12 @@ export function ScrollVideo({
     return (
       <div className="shell">
         <div className="scrollvid__frame">
-          {reduced && src && !failed ? (
+          {reduced && sources.length > 0 && !failed ? (
             <Media src={poster} alt={`${title} — full page`} loading="eager" />
           ) : (
             <AssetSlot
               kind="video"
-              path={src}
+              path={sources[0]}
               note={
                 failed
                   ? 'Nothing loaded from this path. Add the recording as MP4 (H.264) and this section becomes scroll-scrubbable.'
@@ -109,15 +118,24 @@ export function ScrollVideo({
           <div className="scrollvid__frame">
             <video
               ref={videoRef}
-              src={asset(src)}
               poster={asset(poster)}
               muted
               playsInline
               preload="auto"
               // Scrubbed by scroll position — never plays on its own.
-              onError={() => setFailed(true)}
+              // A <source> the browser cannot play fires its own error event,
+              // which React routes here — so only give up once the media
+              // element itself has exhausted every candidate.
+              onError={(event) => {
+                if (event.target !== videoRef.current) return
+                setFailed(true)
+              }}
               aria-label={`${title} — scroll to play through the site`}
-            />
+            >
+              {sources.map((source) => (
+                <source key={source} src={asset(source)} type={mimeFor(source)} />
+              ))}
+            </video>
 
             <div ref={hintRef} className="scrollvid__hint">
               <span className="label">Scroll to play</span>

@@ -567,6 +567,14 @@ a {
 
 .shot__frame > img { width: 100%; height: 100%; object-fit: cover; }
 
+/* Phone screenshots get a portrait frame — a 9:19.5 image cropped into a
+   16:10 one would show nothing but the status bar. */
+.shot__frame--tall {
+  aspect-ratio: 9 / 19.5;
+  max-width: 340px;
+  margin-inline: auto;
+}
+
 .shot__caption { font-size: 0.8125rem; color: var(--gray-500); }
 
 /* Previous / next at the foot of a project. */

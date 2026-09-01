@@ -16,6 +16,8 @@ export type Shot = {
   caption?: string
   /** Full-width instead of half. Use for the money shots. */
   wide?: boolean
+  /** A phone screenshot — shown in a portrait frame instead of 16:10. */
+  tall?: boolean
 }
 
 export type Project = {
@@ -41,8 +43,12 @@ export type Project = {
   embed: boolean
   /** Card image + the still shown before the scroll video loads. */
   cover?: string
-  /** The scroll-through screen recording. The centrepiece of a project page. */
-  scrollVideo?: string
+  /**
+   * The scroll-through screen recording — the centrepiece of a project page.
+   * Pass an array to offer several encodings; the browser takes the first it
+   * can play, so put the most widely supported one first.
+   */
+  scrollVideo?: string | string[]
   /** Page screenshots, in the order you want them read. */
   shots?: Shot[]
   /** A paragraph or two on the project page. */
@@ -68,13 +74,13 @@ export const projects: Project[] = [
     // comes up blank, flip to false and the page falls back to the cover.
     embed: true,
     cover: '/work/gummybears/cover.jpg',
-    scrollVideo: '/work/gummybears/scroll.mp4',
+    scrollVideo: ['/work/gummybears/scroll.mp4', '/work/gummybears/scroll.webm'],
     shots: [
-      { src: '/work/gummybears/01-poster.jpg', caption: 'The home page is the poster', wide: true },
-      { src: '/work/gummybears/02-reserve.jpg', caption: 'Reserving a spot' },
-      { src: '/work/gummybears/03-ticket.jpg', caption: 'A confirmed ticket stub' },
-      { src: '/work/gummybears/04-admin.jpg', caption: 'Admin reservation queue' },
-      { src: '/work/gummybears/05-mobile.jpg', caption: 'Mobile' },
+      { src: '/work/gummybears/02-tickets.jpg', caption: 'Tickets, and what is left', wide: true },
+      { src: '/work/gummybears/03-rules.jpg', caption: 'Where, and the house rules' },
+      { src: '/work/gummybears/04-archive.jpg', caption: 'Everything already done' },
+      { src: '/work/gummybears/05-login.jpg', caption: 'Accounts' },
+      { src: '/work/gummybears/06-mobile.jpg', caption: 'Mobile', tall: true },
     ],
     body: [
       'The brand runs one party at a time, so the site refuses to behave like a listings page. ' +
