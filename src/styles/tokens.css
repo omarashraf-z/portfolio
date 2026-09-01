@@ -27,6 +27,8 @@
   --gutter: clamp(1.25rem, 4vw, 4rem);
   --max: 1440px;
   --max-text: 62ch;
+  /* The column the big media shares — video, live preview, screenshots. */
+  --max-media: 1040px;
 
   /* Motion — one curve, three speeds. */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);

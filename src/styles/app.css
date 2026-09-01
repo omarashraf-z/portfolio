@@ -347,7 +347,7 @@ a {
   aspect-ratio: 16 / 10;
   /* Narrower than the text column it sits under, so the page has a shape
      rather than one full-width block after another. */
-  max-width: 1040px;
+  max-width: var(--max-media);
   margin-inline: auto;
   background: var(--ink-100);
   border: 1px solid var(--line);
@@ -422,11 +422,17 @@ a {
 
 /* --------------------------------------------------------- device frame -- */
 
-.device { display: grid; gap: 1rem; }
+.device {
+  display: grid;
+  gap: 1rem;
+  max-width: var(--max-media);
+  margin-inline: auto;
+}
 
 .device__bar {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.75rem;
   padding: 0.5rem 0.75rem;
   background: var(--ink-150);
@@ -446,6 +452,9 @@ a {
 
 .device__url {
   flex: 1;
+  /* A flex item defaults to min-width:auto, which refuses to shrink below its
+     own text — with nowrap that pushed the whole page sideways on a phone. */
+  min-width: 0;
   font-family: var(--mono);
   font-size: 0.75rem;
   color: var(--gray-600);
@@ -566,7 +575,12 @@ a {
 
 .fact { display: grid; gap: 0.5rem; align-content: start; }
 
-.shots { display: grid; gap: clamp(1.25rem, 3vw, 2.5rem); }
+.shots {
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  max-width: var(--max-media);
+  margin-inline: auto;
+}
 .shots--two { grid-template-columns: repeat(2, 1fr); }
 
 @media (max-width: 860px) { .shots--two { grid-template-columns: 1fr; } }
@@ -639,7 +653,9 @@ a {
 .footer__cta { display: grid; gap: 1.5rem; padding-bottom: clamp(3rem, 8vh, 5rem); }
 
 .footer__mail {
-  font-size: clamp(1.75rem, 6vw, 4rem);
+  font-size: clamp(1.25rem, 6vw, 4rem);
+  /* Long addresses have nowhere to break on a narrow screen. */
+  overflow-wrap: anywhere;
   letter-spacing: -0.04em;
   font-weight: 500;
   line-height: 1.05;
