@@ -5,10 +5,10 @@ export const site = {
   name: 'Omar Ashraf',
   role: 'Web Developer',
   /** The hero headline, one array entry per line. */
-  headline: ['I build websites', 'you can actually', 'open and use.'],
+  headline: ['Building websites', 'that work as hard', 'as you do.'],
   lede:
     'Front-end developer working in the space between design and engineering. ' +
-    'Every project below is live — scroll the recording, then click into the real thing.',
+    'Every project below is live — watch it run, then click into the real thing.',
   email: 'omarelgendy.20062000@gmail.com',
   location: 'Cairo, Egypt',
   available: true,

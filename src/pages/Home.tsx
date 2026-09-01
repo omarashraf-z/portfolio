@@ -35,8 +35,8 @@ export function Home() {
         <div className="section-head">
           <span className="label">Selected work</span>
           <p className="lede">
-            Three recent builds. Each one has a scroll-through of the whole site and a live
-            preview you can click around in.
+            Each one has a recording of the whole site and a live preview you can click
+            around in.
           </p>
         </div>
 
