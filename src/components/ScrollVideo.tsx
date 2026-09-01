@@ -45,6 +45,7 @@ export function ScrollVideo({
 
   const [failed, setFailed] = useState(false)
   const [reduced, setReduced] = useState(false)
+  const deadSources = useRef(0)
 
   useEffect(() => setReduced(prefersReducedMotion()), [])
 
@@ -123,9 +124,8 @@ export function ScrollVideo({
               playsInline
               preload="auto"
               // Scrubbed by scroll position — never plays on its own.
-              // A <source> the browser cannot play fires its own error event,
-              // which React routes here — so only give up once the media
-              // element itself has exhausted every candidate.
+              // Only the media element's own failures land here; a bad
+              // <source> is counted below instead.
               onError={(event) => {
                 if (event.target !== videoRef.current) return
                 setFailed(true)
@@ -133,7 +133,20 @@ export function ScrollVideo({
               aria-label={`${title} — scroll to play through the site`}
             >
               {sources.map((source) => (
-                <source key={source} src={asset(source)} type={mimeFor(source)} />
+                <source
+                  key={source}
+                  src={asset(source)}
+                  type={mimeFor(source)}
+                  // When a <source> list is exhausted the browser sets
+                  // networkState to NETWORK_NO_SOURCE and fires nothing at the
+                  // video itself — so count the dead candidates and fall back
+                  // once every one of them is gone. One failing encoding out of
+                  // several is fine: that is what offering several is for.
+                  onError={() => {
+                    deadSources.current += 1
+                    if (deadSources.current >= sources.length) setFailed(true)
+                  }}
+                />
               ))}
             </video>
 
