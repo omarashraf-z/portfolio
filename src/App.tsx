@@ -7,6 +7,7 @@ import { Home } from './pages/Home'
 import { Work } from './pages/Work'
 import { ProjectPage } from './pages/ProjectPage'
 import { About } from './pages/About'
+import { Contact } from './pages/Contact'
 import { NotFound } from './pages/NotFound'
 
 /** Land at the top of every route change — the router does not do this itself. */
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/work" element={<Work />} />
           <Route path="/work/:slug" element={<ProjectPage />} />
           <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

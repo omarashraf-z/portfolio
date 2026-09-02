@@ -33,9 +33,9 @@ export function Nav() {
           <NavLink to="/about" className="nav__link">
             About
           </NavLink>
-          <a className="nav__link" href={`mailto:${site.email}`}>
+          <NavLink to="/contact" className="nav__link">
             Contact
-          </a>
+          </NavLink>
           <ThemeToggle />
         </nav>
       </div>

@@ -10,6 +10,10 @@ export const site = {
     'Front-end developer working in the space between design and engineering. ' +
     'Every project below is live — watch it run, then click into the real thing.',
   email: 'omarelgendy.20062000@gmail.com',
+  /** Digits only, with the country code — e.g. '201234567890'. Blank hides it. */
+  whatsapp: '',
+  /** Written the way you would say it. Blank hides it. */
+  phone: '',
   location: 'Cairo, Egypt',
   available: true,
   availableNote: 'Taking on freelance work',
@@ -43,3 +47,52 @@ export const site = {
 
 /** The ones with somewhere to go. */
 export const socials = site.socials.filter((social) => social.href.length > 0)
+
+export interface Channel {
+  label: string
+  /** What the visitor reads. */
+  value: string
+  href: string
+  /** One line on when to use this one. */
+  note?: string
+}
+
+/**
+ * Every way to reach Omar, for the contact page. Built from the fields above
+ * rather than repeated, so there is one place to edit and nothing can drift.
+ * Anything without a value is left out.
+ */
+// `as const` above pins these to their literal types, which makes an empty
+// one read as impossible rather than merely absent. Widen them first.
+const whatsapp: string = site.whatsapp
+const phone: string = site.phone
+
+const allChannels: (Channel | null)[] = [
+  {
+    label: 'Email',
+    value: site.email,
+    href: `mailto:${site.email}`,
+    note: 'Best for anything with detail — a brief, a deadline, a budget.',
+  },
+  whatsapp
+    ? {
+        label: 'WhatsApp',
+        value: phone || `+${whatsapp}`,
+        href: `https://wa.me/${whatsapp}`,
+        note: 'Quickest for a short question.',
+      }
+    : null,
+  phone && !whatsapp
+    ? { label: 'Phone', value: phone, href: `tel:${phone.replace(/[^+\d]/g, '')}` }
+    : null,
+  ...socials.map((social) => ({
+    label: social.label,
+    value: social.href.replace(/^https?:\/\//, '').replace(/\/$/, ''),
+    href: social.href,
+    note: social.label === 'GitHub' ? 'Code, including the source of this site.' : undefined,
+  })),
+]
+
+export const channels: Channel[] = allChannels.filter(
+  (channel): channel is Channel => channel !== null,
+)
