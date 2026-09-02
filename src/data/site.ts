@@ -20,11 +20,15 @@ export const site = {
   /**
    * Anything without a href is left out rather than rendered as a link that
    * goes nowhere — fill one in and it appears by itself.
+   *
+   * `contact: false` keeps one out of the contact page's marks while leaving
+   * it in the footer. GitHub is where the work lives rather than a way to
+   * reach him, so it sits with the credits.
    */
   socials: [
-    { label: 'LinkedIn', href: '' },
-    { label: 'Instagram', href: '' },
-    { label: 'GitHub', href: 'https://github.com/omarashraf-z' },
+    { label: 'LinkedIn', href: '', contact: true },
+    { label: 'Instagram', href: '', contact: true },
+    { label: 'GitHub', href: 'https://github.com/omarashraf-z', contact: false },
   ],
   about: {
     intro:
@@ -45,8 +49,23 @@ export const site = {
   ],
 } as const
 
+export interface Social {
+  label: string
+  href: string
+  /** Whether it belongs among the contact page's marks. */
+  contact: boolean
+}
+
+/* `as const` above pins these to literal types, which makes a false flag read
+   as impossible rather than merely off. Widen them once, here. */
+const allSocials: Social[] = site.socials.map((social) => ({
+  label: social.label,
+  href: social.href,
+  contact: social.contact,
+}))
+
 /** The ones with somewhere to go. */
-export const socials = site.socials.filter((social) => social.href.length > 0)
+export const socials = allSocials.filter((social) => social.href.length > 0)
 
 export interface Channel {
   /** Names the link for screen readers and on hover — never drawn as text. */
@@ -72,8 +91,10 @@ const allChannels: (Channel | null)[] = [
   phone && !whatsapp
     ? { label: 'Phone', href: `tel:${phone.replace(/[^+\d]/g, '')}`, icon: 'gmail' }
     : null,
-  ...site.socials.map((social) =>
-    social.href ? { label: social.label, href: social.href, icon: social.label.toLowerCase() } : null,
+  ...allSocials.map((social) =>
+    social.href && social.contact
+      ? { label: social.label, href: social.href, icon: social.label.toLowerCase() }
+      : null,
   ),
 ]
 
