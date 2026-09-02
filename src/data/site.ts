@@ -13,10 +13,14 @@ export const site = {
   location: 'Cairo, Egypt',
   available: true,
   availableNote: 'Taking on freelance work',
+  /**
+   * Anything without a href is left out rather than rendered as a link that
+   * goes nowhere — fill one in and it appears by itself.
+   */
   socials: [
     { label: 'GitHub', href: 'https://github.com/omarashraf-z' },
-    { label: 'LinkedIn', href: '#' },
-    { label: 'Instagram', href: '#' },
+    { label: 'LinkedIn', href: '' },
+    { label: 'Instagram', href: '' },
   ],
   about: {
     intro:
@@ -36,3 +40,6 @@ export const site = {
     { label: 'After', items: 'Maintenance, content updates, analytics, small features' },
   ],
 } as const
+
+/** The ones with somewhere to go. */
+export const socials = site.socials.filter((social) => social.href.length > 0)

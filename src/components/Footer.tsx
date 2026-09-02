@@ -1,4 +1,4 @@
-import { site } from '../data/site'
+import { site, socials } from '../data/site'
 
 export function Footer() {
   return (
@@ -18,7 +18,7 @@ export function Footer() {
           </span>
 
           <div className="footer__social">
-            {site.socials.map((social) => (
+            {socials.map((social) => (
               <a key={social.label} href={social.href} target="_blank" rel="noreferrer noopener">
                 {social.label}
               </a>

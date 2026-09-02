@@ -1,4 +1,4 @@
-import { site } from '../data/site'
+import { site, socials } from '../data/site'
 import { Reveal } from '../components/Reveal'
 
 export function About() {
@@ -36,7 +36,7 @@ export function About() {
               <div className="fact">
                 <span className="label">Elsewhere</span>
                 <div className="chips">
-                  {site.socials.map((social) => (
+                  {socials.map((social) => (
                     <a
                       className="chip"
                       key={social.label}
