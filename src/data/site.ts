@@ -11,7 +11,9 @@ export const site = {
     'Every project below is live — watch it run, then click into the real thing.',
   email: 'omarelgendy.20062000@gmail.com',
   /** Digits only, with the country code — e.g. '201234567890'. Blank hides it. */
-  whatsapp: '',
+  whatsapp: '201121937248',
+  /** Written into the chat for them, so the first message is never a blank box. */
+  whatsappMessage: "Hi Omar — I found your portfolio and I'd like to talk about a website.",
   /** Written the way you would say it. Blank hides it. */
   phone: '',
   location: 'Cairo, Egypt',
@@ -27,7 +29,7 @@ export const site = {
    */
   socials: [
     { label: 'LinkedIn', href: '', contact: true },
-    { label: 'Instagram', href: '', contact: true },
+    { label: 'Instagram', href: 'https://www.instagram.com/omar_ashraf_z/', contact: true },
     { label: 'GitHub', href: 'https://github.com/omarashraf-z', contact: false },
   ],
   about: {
@@ -87,7 +89,14 @@ const phone: string = site.phone
 
 const allChannels: (Channel | null)[] = [
   { label: 'Email', href: `mailto:${site.email}`, icon: 'gmail' },
-  whatsapp ? { label: 'WhatsApp', href: `https://wa.me/${whatsapp}`, icon: 'whatsapp' } : null,
+  whatsapp
+    ? {
+        label: 'WhatsApp',
+        // ?text= opens the chat with the message already typed, ready to send.
+        href: `https://wa.me/${whatsapp}?text=${encodeURIComponent(site.whatsappMessage)}`,
+        icon: 'whatsapp',
+      }
+    : null,
   phone && !whatsapp
     ? { label: 'Phone', href: `tel:${phone.replace(/[^+\d]/g, '')}`, icon: 'gmail' }
     : null,
