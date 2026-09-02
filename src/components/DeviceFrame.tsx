@@ -40,7 +40,7 @@ export function DeviceFrame({
           <span className="device__dot" />
         </div>
         <span className="device__url">{url ? prettyUrl(url) : 'not published yet'}</span>
-        {canEmbed && (
+        {canEmbed && live && (
           <div className="device__dots" role="group" aria-label="Preview size">
             <button
               className="chip"
@@ -82,7 +82,13 @@ export function DeviceFrame({
         )}
 
         {canEmbed && live && (
-          <button className="btn btn--ghost" onClick={() => setLive(false)}>
+          <button
+            className="btn btn--ghost"
+            onClick={() => {
+              setLive(false)
+              setDevice('desktop')
+            }}
+          >
             Close preview
           </button>
         )}
