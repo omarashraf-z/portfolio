@@ -22,9 +22,9 @@ export const site = {
    * goes nowhere — fill one in and it appears by itself.
    */
   socials: [
-    { label: 'GitHub', href: 'https://github.com/omarashraf-z' },
     { label: 'LinkedIn', href: '' },
     { label: 'Instagram', href: '' },
+    { label: 'GitHub', href: 'https://github.com/omarashraf-z' },
   ],
   about: {
     intro:
@@ -49,12 +49,11 @@ export const site = {
 export const socials = site.socials.filter((social) => social.href.length > 0)
 
 export interface Channel {
+  /** Names the link for screen readers and on hover — never drawn as text. */
   label: string
-  /** What the visitor reads. */
-  value: string
   href: string
-  /** One line on when to use this one. */
-  note?: string
+  /** Which brand mark stands for it. See components/BrandIcon.tsx. */
+  icon: string
 }
 
 /**
@@ -68,29 +67,14 @@ const whatsapp: string = site.whatsapp
 const phone: string = site.phone
 
 const allChannels: (Channel | null)[] = [
-  {
-    label: 'Email',
-    value: site.email,
-    href: `mailto:${site.email}`,
-    note: 'Best for anything with detail — a brief, a deadline, a budget.',
-  },
-  whatsapp
-    ? {
-        label: 'WhatsApp',
-        value: phone || `+${whatsapp}`,
-        href: `https://wa.me/${whatsapp}`,
-        note: 'Quickest for a short question.',
-      }
-    : null,
+  { label: 'Email', href: `mailto:${site.email}`, icon: 'gmail' },
+  whatsapp ? { label: 'WhatsApp', href: `https://wa.me/${whatsapp}`, icon: 'whatsapp' } : null,
   phone && !whatsapp
-    ? { label: 'Phone', value: phone, href: `tel:${phone.replace(/[^+\d]/g, '')}` }
+    ? { label: 'Phone', href: `tel:${phone.replace(/[^+\d]/g, '')}`, icon: 'gmail' }
     : null,
-  ...socials.map((social) => ({
-    label: social.label,
-    value: social.href.replace(/^https?:\/\//, '').replace(/\/$/, ''),
-    href: social.href,
-    note: social.label === 'GitHub' ? 'Code, including the source of this site.' : undefined,
-  })),
+  ...site.socials.map((social) =>
+    social.href ? { label: social.label, href: social.href, icon: social.label.toLowerCase() } : null,
+  ),
 ]
 
 export const channels: Channel[] = allChannels.filter(

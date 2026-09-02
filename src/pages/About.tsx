@@ -1,4 +1,4 @@
-import { site, socials } from '../data/site'
+import { site } from '../data/site'
 import { Reveal } from '../components/Reveal'
 
 export function About() {
@@ -32,22 +32,6 @@ export function About() {
                 <a href={`mailto:${site.email}`} style={{ textDecoration: 'underline' }}>
                   {site.email}
                 </a>
-              </div>
-              <div className="fact">
-                <span className="label">Elsewhere</span>
-                <div className="chips">
-                  {socials.map((social) => (
-                    <a
-                      className="chip"
-                      key={social.label}
-                      href={social.href}
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                      {social.label} ↗
-                    </a>
-                  ))}
-                </div>
               </div>
             </div>
           </Reveal>
