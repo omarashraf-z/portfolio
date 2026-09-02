@@ -716,9 +716,20 @@ a {
 
 /* Stacked into one column there is no room beside anything, and a set of marks
    parked over the words would be in the way rather than to hand. */
+/* Stacked into one column there is no room beside anything, so the marks come
+   straight after the heading as a row — to hand without pushing the words
+   down a screen, and never parked over them. */
 @media (max-width: 720px) {
   .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; min-height: 0; }
-  .contact-links { position: static; transform: none; }
+
+  .contact-links {
+    position: static;
+    transform: none;
+    grid-auto-flow: column;
+    justify-content: start;
+    gap: 0.75rem;
+    order: -1;
+  }
 }
 
 .contact-icon {
