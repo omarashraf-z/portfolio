@@ -6,6 +6,10 @@ import { Reveal } from '../components/Reveal'
  * Everywhere to reach him. The channels are marks rather than names — the
  * logos read faster than a list of words, and each carries its name for
  * screen readers and on hover.
+ *
+ * The page's words all sit in the left column so the marks have something
+ * tall to travel alongside: on a wide screen they stick to the middle of the
+ * viewport and stay there for the length of the page.
  */
 export function Contact() {
   return (
@@ -18,16 +22,31 @@ export function Contact() {
 
       <section className="shell section">
         <div className="contact-grid">
-          <p className="lede">
-            {site.available
-              ? `${site.availableNote}. Tell me what you are building and roughly when you need it — email is the surest way, and I answer everything within a day or so.`
-              : 'Tell me what you are building and roughly when you need it — email is the surest way, and I answer everything within a day or so.'}
-          </p>
+          <div className="contact-body">
+            <p className="lede">
+              {site.available
+                ? `${site.availableNote}. Tell me what you are building and roughly when you need it — email is the surest way, and I answer everything within a day or so.`
+                : 'Tell me what you are building and roughly when you need it — email is the surest way, and I answer everything within a day or so.'}
+            </p>
+
+            <div className="contact-where">
+              <span className="label">Where</span>
+              <Reveal>
+                <p className="h3">{site.location}</p>
+              </Reveal>
+              <Reveal delay={80}>
+                <p className="body-muted">
+                  Working remotely with clients anywhere. Email reaches me fastest during the
+                  day in Cairo, and I answer everything within a day or so.
+                </p>
+              </Reveal>
+            </div>
+          </div>
 
           <ul className="contact-links">
             {channels.map((channel, i) => (
-              <Reveal key={channel.label} delay={i * 70}>
-                <li>
+              <li key={channel.label}>
+                <Reveal delay={i * 70}>
                   <a
                     className="contact-icon"
                     href={channel.href}
@@ -39,26 +58,10 @@ export function Contact() {
                   >
                     <BrandIcon name={channel.icon} size={22} />
                   </a>
-                </li>
-              </Reveal>
+                </Reveal>
+              </li>
             ))}
           </ul>
-        </div>
-      </section>
-
-      <section className="shell section">
-        <div className="section-head">
-          <span className="label">Where</span>
-          <div style={{ display: 'grid', gap: '0.75rem' }}>
-            <Reveal>
-              <p className="h3">{site.location}</p>
-            </Reveal>
-            <Reveal delay={80}>
-              <p className="body-muted">
-                Working remotely with clients anywhere.
-              </p>
-            </Reveal>
-          </div>
         </div>
       </section>
     </>

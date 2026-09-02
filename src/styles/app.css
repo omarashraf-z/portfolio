@@ -685,21 +685,40 @@ a {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: clamp(2rem, 6vw, 6rem);
-  align-items: start;
+  align-items: stretch;
+  /* Tall enough that the marks have somewhere to be held: sticky can only
+     move an element inside its own grid area. */
+  min-height: 78vh;
 }
 
-/* On a phone the marks fall below the sentence, still stacked. */
-@media (max-width: 720px) {
-  .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-}
+.contact-body { display: grid; gap: clamp(3rem, 12vh, 7rem); align-content: start; }
+
+.contact-where { display: grid; gap: 0.75rem; justify-items: start; }
 
 .contact-links {
   display: grid;
   gap: 0.875rem;
   justify-items: start;
+  align-content: start;
   list-style: none;
   margin: 0;
   padding: 0;
+
+  /* Held at the middle of the viewport for the length of the page. The column
+     stretches to the row, so there is something to travel inside. */
+  /* Content height, not the full column — a sticky box stretched to its own
+     containing block has nowhere to move. */
+  align-self: start;
+  position: sticky;
+  top: 50vh;
+  transform: translateY(-50%);
+}
+
+/* Stacked into one column there is no room beside anything, and a set of marks
+   parked over the words would be in the way rather than to hand. */
+@media (max-width: 720px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; min-height: 0; }
+  .contact-links { position: static; transform: none; }
 }
 
 .contact-icon {
