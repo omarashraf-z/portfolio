@@ -33,7 +33,6 @@ export type Project = {
   stack: string[]
   /** The real site. Omit while it is not public yet. */
   liveUrl?: string
-  repoUrl?: string
   /**
    * Can the live site be embedded in an iframe?
    * Many sites send X-Frame-Options: DENY and refuse — those show a
@@ -78,7 +77,6 @@ export const projects: Project[] = [
     role: ['Structure', 'Design', 'Frontend', 'Backend'],
     stack: ['React', 'TypeScript', 'Vite', 'Supabase', 'PostgreSQL', 'GitHub Pages'],
     liveUrl: 'https://omarashraf-z.github.io/ClaudeCode-enviroment/',
-    repoUrl: 'https://github.com/omarashraf-z/ClaudeCode-enviroment',
     // GitHub Pages does not block framing, so this should embed — if the frame
     // comes up blank, flip to false and the page falls back to the cover.
     embed: true,
@@ -128,7 +126,6 @@ export const projects: Project[] = [
     role: ['Structure', 'Design', 'Frontend'],
     stack: ['HTML', 'CSS', 'JavaScript', 'JSON', 'GitHub Pages'],
     liveUrl: 'https://omarashraf-z.github.io/restless.claude/',
-    repoUrl: 'https://github.com/omarashraf-z/restless.claude',
     embed: true,
     cover: '/work/restless/cover.jpg',
     video: '/work/restless/scroll.mp4',

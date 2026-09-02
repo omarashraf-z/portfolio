@@ -30,7 +30,6 @@ export const site = {
   socials: [
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/omar-gendy-1024bb433/', contact: true },
     { label: 'Instagram', href: 'https://www.instagram.com/omar_ashraf_z/', contact: true },
-    { label: 'GitHub', href: 'https://github.com/omarashraf-z', contact: false },
   ],
   about: {
     intro:

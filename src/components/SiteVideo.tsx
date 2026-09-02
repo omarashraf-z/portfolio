@@ -33,6 +33,7 @@ export function SiteVideo({
   portrait?: boolean
 }) {
   const sources = src ? (Array.isArray(src) ? src : [src]) : []
+  const sourceKey = sources.join('|')
 
   const videoRef = useRef<HTMLVideoElement>(null)
   const barRef = useRef<HTMLDivElement>(null)
@@ -44,6 +45,16 @@ export function SiteVideo({
   const [playing, setPlaying] = useState(true)
 
   useEffect(() => setReduced(prefersReducedMotion()), [])
+
+  // Moving between projects swaps the <source> elements, but a media element
+  // picks its resource once and never looks again — so without load() the
+  // previous project's recording keeps playing under the new project's page.
+  // The failure count resets with it, or one dead file would condemn the next.
+  useEffect(() => {
+    deadSources.current = 0
+    setFailed(false)
+    videoRef.current?.load()
+  }, [sourceKey])
 
   const playable = sources.length > 0 && !failed
 
